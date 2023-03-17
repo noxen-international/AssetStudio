@@ -19,38 +19,98 @@ namespace AssetStudio
         {
             public Object ReadObject(ObjectReader objectReader)
             {
-                return objectReader.type switch
+                Object obj;
+                switch (objectReader.type)
                 {
-                    ClassIDType.Animation => new Animation(objectReader),
-                    ClassIDType.AnimationClip => new AnimationClip(objectReader),
-                    ClassIDType.Animator => new Animator(objectReader),
-                    ClassIDType.AnimatorController => new AnimatorController(objectReader),
-                    ClassIDType.AnimatorOverrideController => new AnimatorOverrideController(objectReader),
-                    ClassIDType.AssetBundle => new AssetBundle(objectReader),
-                    ClassIDType.AudioClip => new AudioClip(objectReader),
-                    ClassIDType.Avatar => new Avatar(objectReader),
-                    ClassIDType.Font => new Font(objectReader),
-                    ClassIDType.GameObject => new GameObject(objectReader),
-                    ClassIDType.Material => new Material(objectReader),
-                    ClassIDType.Mesh => new Mesh(objectReader),
-                    ClassIDType.MeshFilter => new MeshFilter(objectReader),
-                    ClassIDType.MeshRenderer => new MeshRenderer(objectReader),
-                    ClassIDType.MonoBehaviour => new MonoBehaviour(objectReader),
-                    ClassIDType.MonoScript => new MonoScript(objectReader),
-                    ClassIDType.MovieTexture => new MovieTexture(objectReader),
-                    ClassIDType.PlayerSettings => new PlayerSettings(objectReader),
-                    ClassIDType.RectTransform => new RectTransform(objectReader),
-                    ClassIDType.Shader => new Shader(objectReader),
-                    ClassIDType.SkinnedMeshRenderer => new SkinnedMeshRenderer(objectReader),
-                    ClassIDType.Sprite => new Sprite(objectReader),
-                    ClassIDType.SpriteAtlas => new SpriteAtlas(objectReader),
-                    ClassIDType.TextAsset => new TextAsset(objectReader),
-                    ClassIDType.Texture2D => new Texture2D(objectReader),
-                    ClassIDType.Transform => new Transform(objectReader),
-                    ClassIDType.VideoClip => new VideoClip(objectReader),
-                    ClassIDType.ResourceManager => new ResourceManager(objectReader),
-                    _ => new Object(objectReader),
-                };
+                    case ClassIDType.Animation:
+                        obj = new Animation(objectReader);
+                        break;
+                    case ClassIDType.AnimationClip:
+                        obj = new AnimationClip(objectReader);
+                        break;
+                    case ClassIDType.Animator:
+                        obj = new Animator(objectReader);
+                        break;
+                    case ClassIDType.AnimatorController:
+                        obj = new AnimatorController(objectReader);
+                        break;
+                    case ClassIDType.AnimatorOverrideController:
+                        obj = new AnimatorOverrideController(objectReader);
+                        break;
+                    case ClassIDType.AssetBundle:
+                        obj = new AssetBundle(objectReader);
+                        break;
+                    case ClassIDType.AudioClip:
+                        obj = new AudioClip(objectReader);
+                        break;
+                    case ClassIDType.Avatar:
+                        obj = new Avatar(objectReader);
+                        break;
+                    case ClassIDType.Font:
+                        obj = new Font(objectReader);
+                        break;
+                    case ClassIDType.GameObject:
+                        obj = new GameObject(objectReader);
+                        break;
+                    case ClassIDType.Material:
+                        obj = new Material(objectReader);
+                        break;
+                    case ClassIDType.Mesh:
+                        obj = new Mesh(objectReader);
+                        break;
+                    case ClassIDType.MeshFilter:
+                        obj = new MeshFilter(objectReader);
+                        break;
+                    case ClassIDType.MeshRenderer:
+                        obj = new MeshRenderer(objectReader);
+                        break;
+                    case ClassIDType.MonoBehaviour:
+                        obj = new MonoBehaviour(objectReader);
+                        break;
+                    case ClassIDType.MonoScript:
+                        obj = new MonoScript(objectReader);
+                        break;
+                    case ClassIDType.MovieTexture:
+                        obj = new MovieTexture(objectReader);
+                        break;
+                    case ClassIDType.PlayerSettings:
+                        obj = new PlayerSettings(objectReader);
+                        break;
+                    case ClassIDType.RectTransform:
+                        obj = new RectTransform(objectReader);
+                        break;
+                    case ClassIDType.Shader:
+                        obj = new Shader(objectReader);
+                        break;
+                    case ClassIDType.SkinnedMeshRenderer:
+                        obj = new SkinnedMeshRenderer(objectReader);
+                        break;
+                    case ClassIDType.Sprite:
+                        obj = new Sprite(objectReader);
+                        break;
+                    case ClassIDType.SpriteAtlas:
+                        obj = new SpriteAtlas(objectReader);
+                        break;
+                    case ClassIDType.TextAsset:
+                        obj = new TextAsset(objectReader);
+                        break;
+                    case ClassIDType.Texture2D:
+                        obj = new Texture2D(objectReader);
+                        break;
+                    case ClassIDType.Transform:
+                        obj = new Transform(objectReader);
+                        break;
+                    case ClassIDType.VideoClip:
+                        obj = new VideoClip(objectReader);
+                        break;
+                    case ClassIDType.ResourceManager:
+                        obj = new ResourceManager(objectReader);
+                        break;
+                    default:
+                        obj = new Object(objectReader);
+                        break;
+                }
+                return obj;
             }
         }
 
@@ -436,7 +496,11 @@ namespace AssetStudio
                     var objectReader = new ObjectReader(assetsFile.reader, assetsFile, objectInfo);
                     try
                     {
-                        assetsFile.AddObject(ObjectReader.ReadObject(objectReader));
+                        var obj = ObjectReader.ReadObject(objectReader);
+                        if (obj != null)
+                        {
+                            assetsFile.AddObject(obj);
+                        }
                     }
                     catch (Exception e)
                     {
